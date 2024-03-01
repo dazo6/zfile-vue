@@ -67,8 +67,8 @@
 				</el-dropdown>
 
         <!-- 画廊模式切换 -->
-				<div v-show="route.params.storageKey" @click="fileDataStore.imgMode = !fileDataStore.imgMode">
-					<svg-icon v-if="fileDataStore.imgMode" class="text-4xl" name="img-enable"></svg-icon>
+				<div v-show="route.params.storageKey" @click="switchImgMode">
+					<svg-icon v-if="fileDataStore.imgModeUrl.includes(pathname())" class="text-4xl" name="img-enable"></svg-icon>
 					<svg-icon v-else class="text-4xl" name="img-disable"></svg-icon>
 				</div>
 
@@ -112,11 +112,11 @@
               <svg-icon class="text-base mr-2 text-gray-500" name="upload-folder"></svg-icon>
               上传文件夹
             </el-dropdown-item>
-            <el-dropdown-item v-if="!fileDataStore.imgMode" @click="fileDataStore.imgMode = true">
+            <el-dropdown-item v-if="!fileDataStore.imgModeUrl.includes(pathname())" @click="fileDataStore.imgModeUrl.push(pathname())">
               <svg-icon class="text-base mr-2 text-gray-500" name="image"></svg-icon>
               打开画廊模式
             </el-dropdown-item>
-            <el-dropdown-item v-else-if="fileDataStore.imgMode" @click="fileDataStore.imgMode = false">
+            <el-dropdown-item v-else-if="fileDataStore.imgModeUrl.includes(pathname())" @click="fileDataStore.imgModeUrl = fileDataStore.imgModeUrl.filter(item => item != pathname())">
               <svg-icon class="text-base mr-2 text-gray-500" name="image"></svg-icon>
               关闭画廊模式
             </el-dropdown-item>
@@ -261,6 +261,25 @@ onMounted(() => {
   })
 })
 
+
+const pathname = () => {
+  return window.location.pathname
+}
+
+const switchImgMode = () => {
+  
+  if (isImgMode()) {
+    fileDataStore.imgModeUrl = fileDataStore.imgModeUrl.filter(item => item != pathname());
+  } else {
+    fileDataStore.imgModeUrl.push(pathname());
+  }
+}
+
+const isImgMode = () => {
+  console.log("isImgMode", fileDataStore.imgModeUrl.includes(pathname()))
+  console.log("isImgMode",fileDataStore.imgModeUrl)
+  return fileDataStore.imgModeUrl.includes(pathname());
+}
 
 </script>
 

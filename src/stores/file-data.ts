@@ -6,6 +6,7 @@ import useStorageConfigStore from "./storage-config";
 
 // 当前存储源的配置信息，数据来源为服务端配置。请求存储源后会获取其配置信息。
 const useFileDataStore = defineStore('fileDataStore', {
+  persist: true,
   state: () => {
     return {
       currentClickRow: {},
@@ -19,6 +20,7 @@ const useFileDataStore = defineStore('fileDataStore', {
       },
       imgMode: false,
       newImgMode: false,
+      imgModeUrl:[],
       oldStorageKey: null,
       searchParam: '',
       fileListSource: [],

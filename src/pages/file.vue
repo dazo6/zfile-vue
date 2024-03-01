@@ -18,7 +18,7 @@
 
       <!-- 文件区 -->
       <el-table
-        v-if="!fileDataStore.imgMode"
+        v-if="!fileDataStore.imgModeUrl.includes(pathname())"
         id="ListTable"
         ref="fileTableRef"
         v-loading="basicLoading"
@@ -134,7 +134,7 @@
       </el-table>
 
       <!-- 画廊模式 -->
-      <file-gallery v-if="fileDataStore.imgMode"></file-gallery>
+      <file-gallery v-if="fileDataStore.imgModeUrl.includes(pathname())"></file-gallery>
 
       <!-- 右键菜单 -->
       <z-contextmenu></z-contextmenu>
@@ -376,6 +376,9 @@ const showDialog = (readmeText) => {
   }
 
   return true;
+}
+const pathname = () => {
+  return window.location.pathname
 }
 
 </script>

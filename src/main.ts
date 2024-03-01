@@ -7,6 +7,7 @@ import App from './App.vue'
 import axios from "axios";
 const app = createApp(App)
 
+
 import useGlobalConfigStore from "~/stores/global-config";
 const globalConfigStore = useGlobalConfigStore();
 
